@@ -2,14 +2,11 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import {qiankunWindow, renderWithQiankun, QiankunProps} from "vite-plugin-qiankun/es/helper";
 
-let instance = null;
+let instance: any = null;
 
-function render(props = {}) {
-    const {container} = props;
-    console.log(container)
-    instance = createApp(App)
-        // .mount('#app')
-        .mount(container ? container.querySelector('#app') : document.getElementById("app"))
+function render(props: QiankunProps) {
+    const container = props.container?.querySelector('#app')
+    instance = createApp(App).mount(container || '#app')
 }
 
 
@@ -33,5 +30,5 @@ renderWithQiankun({
 })
 
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
-    render()
+    createApp(App).mount('#app')
 }
